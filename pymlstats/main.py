@@ -131,7 +131,7 @@ class Application(object):
 
     def __print_output(self, text):
         if not self.be_quiet:
-            print text
+            print(text)
 
     def __get_backend(self, mailing_list):
         def guess_backend(ml):
@@ -251,7 +251,7 @@ class Application(object):
 
             try:
                 messages, non_parsed_messages = self.mail_parser.get_messages()
-            except IOError, e:
+            except IOError as e:
                 self.__print_output("Invalid file: %s - %s. Skipping."
                                     % (archive.filepath, str(e)))
                 continue
