@@ -40,7 +40,7 @@ def MediumText():
 
 class MailingLists(Base):
     __tablename__ = 'mailing_lists'
-    __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8'}
+    __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8mb4'}
 
     mailing_list_url = Column(VARCHAR(255), primary_key=True)
     mailing_list_name = Column(VARCHAR(255))
@@ -58,7 +58,7 @@ class MailingLists(Base):
 
 class CompressedFiles(Base):
     __tablename__ = 'compressed_files'
-    __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8'}
+    __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8mb4'}
 
     url = Column(VARCHAR(255), primary_key=True)
     mailing_list_url = Column(VARCHAR(255),
@@ -80,7 +80,7 @@ class CompressedFiles(Base):
 class People(Base):
     __tablename__ = 'people'
     __table_args__ = {'mysql_engine': 'InnoDB',
-                      'mysql_charset': 'utf8'}
+                      'mysql_charset': 'utf8mb4'}
 
     email_address = Column(VARCHAR(255), primary_key=True)
     name = Column(VARCHAR(255))
@@ -100,7 +100,7 @@ class People(Base):
 
 class Messages(Base):
     __tablename__ = 'messages'
-    __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8'}
+    __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8mb4'}
 
     message_id = Column(VARCHAR(255), primary_key=True)
     mailing_list_url = Column(VARCHAR(255),
@@ -147,7 +147,7 @@ class MessagesPeople(Base):
                                             'messages.mailing_list_url'],
                                             onupdate='CASCADE',
                                             ondelete='CASCADE'),
-                      {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8'}
+                      {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8mb4'}
                       )
 
     type_of_recipient = Column(Enum('From', 'To', 'Cc',
@@ -178,7 +178,7 @@ class MessagesPeople(Base):
 
 class MailingListsPeople(Base):
     __tablename__ = 'mailing_lists_people'
-    __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8'}
+    __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8mb4'}
 
     email_address = Column(VARCHAR(255),
                            ForeignKey('people.email_address',
@@ -209,7 +209,7 @@ if __name__ == '__main__':
         print '     postgres://user@/mlstats'
         sys.exit(-1)
 
-    engine = create_engine(sys.argv[1], encoding='utf8',
+    engine = create_engine(sys.argv[1], encoding='utf8mb4',
                            echo=False)
 
     Base.metadata.create_all(engine, checkfirst=True)

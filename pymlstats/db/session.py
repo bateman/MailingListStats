@@ -115,7 +115,6 @@ class Database(object):
 
     def insert_messages(self, message, mailing_list_url):
         result = 0
-        body = unidecode(message['body']).encode('utf8', 'ignore')
         msg = db.Messages(message_id=message['message-id'],
                           mailing_list_url=mailing_list_url,
                           mailing_list=message['list-id'],
@@ -123,7 +122,7 @@ class Database(object):
                           first_date_tz=message['date_tz'],
                           arrival_date=message['received'],
                           subject=message['subject'],
-                          message_body=body, #message['body'],
+                          message_body=message['body'],
                           is_response_of=message['in-reply-to'])
         try:
             self.session.add(msg)
@@ -268,6 +267,6 @@ if __name__ == '__main__':
     logging.basicConfig()
     logging.getLogger('sqlalchemy.engine').setLevel(logging.WARN)
 
-    engine = create_engine(sys.argv[1], encoding='utf8')
+    engine = create_engine(sys.argv[1], encoding='utf8mb4')
 
     Database.create_tables(engine, checkfirst=True)
