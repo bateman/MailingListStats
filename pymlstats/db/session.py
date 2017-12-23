@@ -23,7 +23,7 @@ by mlstats.
 """
 
 from sqlalchemy.orm import aliased
-from sqlalchemy.exc import IntegrityError, DataError
+from sqlalchemy.exc import IntegrityError, DataError, OperationalError
 import logging
 
 import database as db
@@ -115,6 +115,7 @@ class Database(object):
 
     def insert_messages(self, message, mailing_list_url):
         result = 0
+        body = unidecode(message['body']).encode('utf8', 'ignore')
         msg = db.Messages(message_id=message['message-id'],
                           mailing_list_url=mailing_list_url,
                           mailing_list=message['list-id'],
@@ -122,7 +123,7 @@ class Database(object):
                           first_date_tz=message['date_tz'],
                           arrival_date=message['received'],
                           subject=message['subject'],
-                          message_body=message['body'],
+                          message_body=body, #message['body'],
                           is_response_of=message['in-reply-to'])
         try:
             self.session.add(msg)
@@ -135,6 +136,8 @@ class Database(object):
         except DataError:
             self.log.warning(u'DataError: {}'.format(msg))
             result = self.INSERT_ERROR_DATA_ERROR
+        except Exception:
+            self.log.error(u'Error: {}'.format(msg))
 
         return result
 
