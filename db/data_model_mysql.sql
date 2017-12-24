@@ -1,6 +1,6 @@
 -- MySQL schema
-CREATE DATABASE mlstats;
-use mlstats;
+CREATE DATABASE IF NOT EXISTS apache_mlstats;
+use apache_mlstats;
 
 -- Create tables --
 CREATE TABLE mailing_lists (
