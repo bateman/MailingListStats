@@ -34,8 +34,8 @@ options are changed.
 import sys
 import argparse
 import os
-from main import Application
-from version import mlstats_version
+from pymlstats.main import Application
+from pymlstats.version import mlstats_version
 
 name = 'mlstats - A tool to retrieve, parse and analyze archived mail boxes'
 
