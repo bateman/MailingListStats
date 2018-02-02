@@ -179,4 +179,4 @@ def mlstats_dot_dir():
         return _dirs['dot']
 
 if __name__ == '__main__':
-    print "mlstats dot dir: %s" % (mlstats_dot_dir())
+    print("mlstats dot dir: %s" % (mlstats_dot_dir()))

@@ -1,8 +1,9 @@
 -- MySQL schema
-CREATE DATABASE IF NOT EXISTS apache_mlstats;
-use apache_mlstats;
+CREATE DATABASE IF NOT EXISTS apache;
+use apache;
 
 -- Create tables --
+DROP TABLE IF EXISTS mailing_lists;
 CREATE TABLE mailing_lists (
     mailing_list_url VARCHAR(255) CHARACTER SET utf8 NOT NULL,
     mailing_list_name VARCHAR(255) CHARACTER SET utf8 NULL DEFAULT 'NULL',
@@ -11,6 +12,7 @@ CREATE TABLE mailing_lists (
     PRIMARY KEY(mailing_list_url))
 ENGINE=INNODB;
 
+DROP TABLE IF EXISTS compressed_files;
 CREATE TABLE compressed_files (
     url varchar(255) CHARACTER SET utf8 NOT NULL,
     mailing_list_url varchar(255) CHARACTER SET utf8 not null,
@@ -21,6 +23,7 @@ CREATE TABLE compressed_files (
         references mailing_lists(mailing_list_url))
 ENGINE=INNODB;
 
+DROP TABLE IF EXISTS people;
 CREATE TABLE people (
     email_address VARCHAR(255) CHARACTER SET utf8 NOT NULL,
     name VARCHAR(255) CHARACTER SET utf8 NULL,
@@ -30,6 +33,7 @@ CREATE TABLE people (
     PRIMARY KEY(email_address))
 ENGINE=INNODB;
 
+DROP TABLE IF EXISTS messages;
 CREATE TABLE messages (
     message_id VARCHAR(255) CHARACTER SET utf8 NOT NULL,
     mailing_list_url VARCHAR(255) CHARACTER SET utf8 NOT NULL,
@@ -50,6 +54,7 @@ CREATE TABLE messages (
         ON UPDATE CASCADE)
 ENGINE=INNODB;
 
+DROP TABLE IF EXISTS messages_people;
 CREATE TABLE messages_people (
     type_of_recipient ENUM('From','To','Cc') NOT NULL DEFAULT 'From',
     message_id VARCHAR(255) CHARACTER SET utf8 NOT NULL,
@@ -65,6 +70,7 @@ CREATE TABLE messages_people (
         ON UPDATE CASCADE)
 ENGINE=INNODB;
 
+DROP TABLE IF EXISTS mailing_lists_people;
 CREATE TABLE mailing_lists_people (
     email_address VARCHAR(255) CHARACTER SET utf8 NOT NULL,
     mailing_list_url VARCHAR(255) CHARACTER SET utf8 NOT NULL,
